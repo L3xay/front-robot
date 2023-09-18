@@ -1,24 +1,18 @@
-# robo-front
+# Robot-Frontend
+
+## This the Frontend app where the robots are being added, edited and deleted
 
 ## Project setup
+1. Install all dependencies
 ```
 npm install
 ```
-
-### Compiles and hot-reloads for development
+2. Run npm server
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Note
+- Please make sure that the backend is set up and running
+- with the migration and seeds already executed
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
