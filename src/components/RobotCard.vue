@@ -6,29 +6,47 @@
     <p>Info: {{ robot.info }}</p>
     <section class="button-group">
       <button @click="editRobot(robot)" class="edit-button">Edit</button>
-      <router-link :to="{ name: 'RobotDetails', params: { id: robot.id }}" class="detail-button">Detail</router-link>
+      <router-link :to="{ name: 'RobotDetails', params: { id: robot.id }}" class="detail-button">
+        <span @click="setTargetRobot(robot)">
+          Detail
+        </span>
+      </router-link>
       <button class="delete-button" @click="confirmDeletion">Delete</button>
     </section>
   </div>
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
-  props: ['robot'],
+  props: ["robot"],
   methods: {
+    ...mapActions({
+      // Calling actions from the store
+      "actionHandleTargetRobot": "handleTargetRobot"
+    }),
+    /**
+     * Sets the target robot and triggers the corresponding action.
+     *
+     * @param {Object} robot - The robot object to set as the target.
+     */
+    setTargetRobot(robot) {
+      this.actionHandleTargetRobot(robot)
+    },
     /**
      * Emits an 'edit' event to the parent component, passing along the robot object to be edited.
      *
      * @param {Object} robot - The robot object to be edited.
      */
     editRobot(robot) {
-      this.$emit('edit', robot);
+      this.$emit("edit", robot);
     },
     /**
      * Emits a 'confirmDeletion' event to the parent component to confirm the deletion of a robot.
      */
     confirmDeletion() {
-      this.$emit('confirmDeletion');
+      this.$emit("confirmDeletion");
     }
   }
 }

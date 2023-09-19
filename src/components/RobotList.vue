@@ -56,7 +56,7 @@ export default {
       showModal: false,
       selectedRobot: null,
       showCancellationModal: false,
-      robotToDelete: ''
+      robotToDelete: ""
     };
   },
   async mounted() {
@@ -67,9 +67,8 @@ export default {
   computed: {
     // Calling getters from the store
     ...mapGetters({
-      'gettersRobots': 'getRobots',
-      'gettersIsEdit': 'getIsEdit',
-      'gettersRobotById': 'getRobotById',
+      "gettersRobots": "getRobots",
+      "gettersIsEdit": "getIsEdit",
       "gettersIsDetail": "getIsDetail",
       "gettersIsAdding": "getIsAdding"
     })
@@ -78,8 +77,8 @@ export default {
   methods: {
     ...mapActions({
       // Calling actions from the store
-      "actionFetchRobots": 'fetchRobots',
-      "actionHandleIsEdit": 'handleIsEdit',
+      "actionFetchRobots": "fetchRobots",
+      "actionHandleIsEdit": "handleIsEdit",
       "actionDeleteRobot": "deleteRobot",
       "actionHandleIsAdding": "handleIsAdding",
       "actionHandleTargetRobot": "handleTargetRobot"
@@ -105,10 +104,10 @@ export default {
      * @param {Object} robot - The robot object to be edited.
      */
     showEditModal(robot) {
-      this.actionHandleIsEdit(true);
       this.selectedRobot = robot;
+      this.actionHandleIsEdit(true);
       this.showModal = true;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     },
     /**
      * Deletes a robot by its ID and refreshes the robot list.
@@ -121,7 +120,8 @@ export default {
         await this.actionFetchRobots();
         this.showCancellationModal = false;
       } catch (error) {
-        console.error("An error occurred while deleting the robot:", error);
+        console.error("An error occurred while deleting the robot:");
+        console.log(error);
         this.showCancellationModal = false;
       }
     },

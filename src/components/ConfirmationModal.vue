@@ -11,21 +11,21 @@
 
 <script>
 export default {
-  props: ['show'],
+  props: ["show"],
   methods: {
     /**
      * Emits a 'confirm' event to the parent component.
      * Typically used to confirm an action like deletion.
      */
     confirm() {
-      this.$emit('confirm');
+      this.$emit("confirm");
     },
     /**
      * Emits a 'cancel' event to the parent component.
      * Typically used to cancel an action or close a modal.
      */
     cancel() {
-      this.$emit('cancel');
+      this.$emit("cancel");
     }
   }
 }

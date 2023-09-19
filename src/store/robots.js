@@ -1,6 +1,6 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import axios from 'axios';
+import Vue from "vue";
+import Vuex from "vuex";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -37,7 +37,6 @@ export default new Vuex.Store({
          * @param {Object} robot - The robot object to set as target.
          */
         SET_TARGET_ROBOT(state, robot) {
-            console.log('%c in mutation','background:red;color:black;font-size:20px', robot);
             state.targetRobot = robot;
         },
         /**
@@ -80,10 +79,10 @@ export default new Vuex.Store({
          */
         async fetchRobots({ commit }) {
             try {
-                const response = await axios.get('http://localhost:3000/robots');
-                commit('SET_ROBOTS', response.data);
+                const response = await axios.get("http://localhost:3000/robots");
+                commit("SET_ROBOTS", response.data);
             } catch (error) {
-                commit('SET_ERROR', 'Something went wrong while fetching the robots.');
+                commit("SET_ERROR", "Something went wrong while fetching the robots.");
             }
         },
         /**
@@ -93,10 +92,10 @@ export default new Vuex.Store({
          */
         async addRobot({ commit, state }, newRobot) {
             try {
-                const response = await axios.post('http://localhost:3000/robots', newRobot);
-                commit('SET_ROBOTS', [...state.robots, response.data]);
+                const response = await axios.post("http://localhost:3000/robots", newRobot);
+                commit("SET_ROBOTS", [...state.robots, response.data]);
             } catch (error) {
-                commit('SET_ERROR', 'Something went wrong while adding the robot.');
+                commit("SET_ERROR", "Something went wrong while adding the robot.");
             }
         },
         /**
@@ -109,14 +108,14 @@ export default new Vuex.Store({
                 await axios.put(`http://localhost:3000/robots/${updatedRobot.id}`, updatedRobot);
                 const robotIndex = state.robots.findIndex(robot => robot.id === updatedRobot.id);
                 if (robotIndex !== -1) {
-                    commit('SET_ROBOTS', [
+                    commit("SET_ROBOTS", [
                         ...state.robots.slice(0, robotIndex),
                         updatedRobot,
                         ...state.robots.slice(robotIndex + 1)
                     ]);
                 }
             } catch (error) {
-                commit('SET_ERROR', 'Something went wrong while editing the robot.');
+                commit("SET_ERROR", "Something went wrong while editing the robot.");
             } finally {
                 commit("SET_EDIT", false);
             }
@@ -127,8 +126,7 @@ export default new Vuex.Store({
          * @param {Object} robot - The robot to set as the target.
          */
         handleTargetRobot({ commit }, robot) {
-            console.log('%c in action','background:red;color:black;font-size:20px', robot);
-            commit('SET_TARGET_ROBOT', robot);
+            commit("SET_TARGET_ROBOT", robot);
         },
         /**
          * Toggles the edit mode in the state.
@@ -162,7 +160,7 @@ export default new Vuex.Store({
         async deleteRobot({ commit }, id) {
             try {
                 await axios.delete(`/robots/${id}`);
-                commit('DELETE_ROBOT', id);
+                commit("DELETE_ROBOT", id);
             } catch (error) {
                 console.error("An error occurred while deleting the robot:", error);
             }
@@ -178,13 +176,14 @@ export default new Vuex.Store({
             return state.robots;
         },
         /**
-         * Returns a robot by its ID.
-         * @param {Object} state - Vuex state object.
-         * @param {number} id - The ID of the robot.
-         * @return {Object|null} - The robot object or null if not found.
+         * Retrieves a robot by its ID from the state.
+         *
+         * @param {Object} state - The Vuex state object containing the robots array.
+         * @param {number|string} robotId - The ID of the robot to retrieve.
+         * @returns {Object|null} The robot object if found, or null if not found.
          */
-        getRobotById: state => id => {
-            return state.robots.find(robot => robot.id === id);
+        getRobotById: (state) => (robotId) => {
+            return state.robots.find(robot => robot.id === robotId);
         },
         /**
          * Returns the state of the edit mode.
@@ -209,6 +208,14 @@ export default new Vuex.Store({
          */
         getIsAdding: state => {
             return state.isAdding;
+        },
+        /**
+         * Retrieves the target robot from the state.
+         * @param {Object} state - The Vuex state object containing the targetRobot.
+         * @returns {Object|null} The target robot object if set, or null if not set.
+         */
+        getTargetRobot: state => {
+            return state.targetRobot;
         },
     }
 });
