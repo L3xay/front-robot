@@ -1,9 +1,15 @@
 <template>
   <div class="robot-card">
     <h3>{{ robot.name }}</h3>
-    <p>Status: {{ robot.status }}</p>
-    <p>Specification: {{ robot.specification }}</p>
-    <p>Info: {{ robot.info }}</p>
+    <p>
+      <strong>Status</strong>: {{ robot.status }}
+    </p>
+    <p>
+      <strong>Specification</strong>: {{ robot.specification }}
+    </p>
+    <p>
+      <strong>Info</strong>: {{ robot.info }}
+    </p>
     <section class="button-group">
       <button @click="editRobot(robot)" class="edit-button">Edit</button>
       <router-link :to="{ name: 'RobotDetails', params: { id: robot.id }}" class="detail-button">
@@ -62,6 +68,9 @@ export default {
   margin: 16px;
   width: 300px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .robot-card:hover {
@@ -71,7 +80,7 @@ export default {
 .button-group {
   display: flex;
   justify-content: space-between;
-  margin-top: 55px;
+  margin-top: 25px;
 }
 
 .edit-button {
