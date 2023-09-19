@@ -162,6 +162,9 @@ label.active {
   background: #7A97CD;
   color: white;
 }
+label:hover {
+  background-color: #5C80C1;
+}
 
 .toggle-input {
   display: none;
