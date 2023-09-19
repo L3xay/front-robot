@@ -9,12 +9,6 @@
         </p>
       </div>
       <div>
-        <input v-model="status" placeholder="Status" />
-        <p v-if="statusErrors.length" class="error">
-          <span v-for="error in statusErrors" :key="error">{{ error }}</span>
-        </p>
-      </div>
-      <div>
         <input v-model="specification" placeholder="Specification" />
         <p v-if="specificationErrors.length" class="error">
           <span v-for="error in specificationErrors" :key="error">{{ error }}</span>
@@ -24,6 +18,19 @@
         <input v-model="info" placeholder="Info" />
         <p v-if="infoErrors.length" class="error">
           <span v-for="error in infoErrors" :key="error">{{ error }}</span>
+        </p>
+      </div>
+      <div class="toggle-buttons">
+        <label :class="{ active: status === 'Active' }">
+          <input type="radio" v-model="status" value="Active" class="toggle-input"/>
+          Active
+        </label>
+        <label  :class="{ active: status === 'Inactive' }">
+          <input type="radio" v-model="status" value="Inactive" class="toggle-input"/>
+          Inactive
+        </label>
+        <p v-if="statusErrors.length" class="error">
+          <span v-for="error in statusErrors" :key="error">{{ error }}</span>
         </p>
       </div>
       <button type="submit">Add</button>
@@ -158,5 +165,30 @@ button:hover {
 .error {
   color: red;
   margin-top: 5px;
+}
+
+.toggle-buttons {
+  display: inline-flex;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+label {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  background: #f2f2f2;
+  color: #333;
+}
+
+label.active {
+  background: #7A97CD;
+  color: white;
+}
+
+.toggle-input {
+  display: none;
 }
 </style>
