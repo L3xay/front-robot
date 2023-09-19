@@ -41,16 +41,17 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { validateForm } from "@/util/utils";
 
 export default {
   props: ['robot'],
 
   data() {
     return {
-      name: '',
-      status: '',
-      specification: '',
-      info: '',
+      name: "",
+      status: "",
+      specification: "",
+      info: "",
       nameErrors: [],
       statusErrors: [],
       specificationErrors: [],
@@ -67,41 +68,15 @@ export default {
   },
   methods: {
     ...mapActions({
-      "actionEditRobot": 'editRobot',
+      "actionEditRobot": "editRobot",
       "actionHandleIsEdit": "handleIsEdit"
     }),
-    /**
-     * Validates the form fields and sets error messages if validation fails.
-     *
-     * @returns {boolean} - Returns true if validation passes, otherwise false.
-     */
-    validateForm() {
-      this.nameErrors = [];
-      this.statusErrors = [];
-      this.specificationErrors = [];
-      this.infoErrors = [];
-
-      if (!this.name) this.nameErrors.push("Name is required.");
-      if (this.name.length > 50) this.nameErrors.push("Name is too long.");
-
-      if (!this.status || (this.status !== "Active" && this.status !== "Inactive")) {
-        this.statusErrors.push("Status is invalid.");
-      }
-
-      if (!this.specification) this.specificationErrors.push("Specification is required.");
-      if (this.info.length > 100) this.specificationErrors.push("Specification is too long.");
-
-      if (!this.info) this.infoErrors.push("Info is required.");
-      if (this.info.length > 100) this.infoErrors.push("Info is too long.");
-
-      return !(this.nameErrors.length || this.statusErrors.length || this.specificationErrors.length || this.infoErrors.length);
-    },
     /**
      * Asynchronously edits an existing robot using Vuex action if form validation passes.
      * Emits a 'close' event to the parent component upon successful editing.
      */
     async saveChanges() {
-      if (this.validateForm()) {
+      if (validateForm(this.$data)) {
         try {
           await this.actionEditRobot({
             id: this.robot.id,
@@ -110,7 +85,7 @@ export default {
             specification: this.specification,
             info: this.info
           });
-          this.$emit('close');
+          this.$emit("close");
         } catch (error) {
           console.error("Something went wrong while editing the robot.");
           console.log(error);

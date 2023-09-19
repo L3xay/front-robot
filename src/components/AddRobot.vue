@@ -29,10 +29,10 @@
           <input type="radio" v-model="status" value="Inactive" class="toggle-input"/>
           Inactive
         </label>
-        <p v-if="statusErrors.length" class="error">
-          <span v-for="error in statusErrors" :key="error">{{ error }}</span>
-        </p>
       </div>
+      <p v-if="statusErrors.length" class="error">
+        <span v-for="error in statusErrors" :key="error">{{ error }}</span>
+      </p>
       <button type="submit">Add</button>
       <button type="button" class="cancel" @click="actionHandleIsAdding(false)">Cancel</button>
     </form>
@@ -41,57 +41,32 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { validateForm } from "@/util/utils";
 
 export default {
   data() {
     return {
-      name: '',
-      status: '',
-      specification: '',
-      info: '',
+      name: "",
+      status: "",
+      specification: "",
+      info: "",
       nameErrors: [],
       statusErrors: [],
       specificationErrors: [],
-      infoErrors: []
+      infoErrors: [],
     };
   },
   methods: {
     ...mapActions({
-      "actionAddRobot": 'addRobot',
+      "actionAddRobot": "addRobot",
       "actionHandleIsAdding": "handleIsAdding"
     }),
-    /**
-     * Validates the form fields and sets error messages if validation fails.
-     *
-     * @returns {boolean} - Returns true if validation passes, otherwise false.
-     */
-    validateForm() {
-      this.nameErrors = [];
-      this.statusErrors = [];
-      this.specificationErrors = [];
-      this.infoErrors = [];
-
-      if (!this.name) this.nameErrors.push("Name is required.");
-      if (this.name.length > 50) this.nameErrors.push("Name is too long.");
-
-      if (!this.status || (this.status !== "Active" && this.status !== "Inactive")) {
-        this.statusErrors.push("Status is invalid.");
-      }
-
-      if (!this.specification) this.specificationErrors.push("Specification is required.");
-      if (this.info.length > 100) this.specificationErrors.push("Specification is too long.");
-
-      if (!this.info) this.infoErrors.push("Info is required.");
-      if (this.info.length > 100) this.infoErrors.push("Info is too long.");
-
-      return !(this.nameErrors.length || this.infoErrors.length || this.statusErrors.length || this.specificationErrors.length);
-    },
     /**
      * Asynchronously adds a new robot using Vuex action if form validation passes.
      * Resets the form data and toggles the adding state off upon successful addition.
      */
     async addNewRobot() {
-      if (this.validateForm()) {
+      if (validateForm(this.$data)) {
         try {
           await this.actionAddRobot({
             name: this.name,
@@ -102,8 +77,8 @@ export default {
           this.resetFormData();
           this.actionHandleIsAdding(false)
         } catch (error) {
+          console.log("Something went wrong while adding the robot.");
           console.log(error)
-          this.nameErrors.push("Something went wrong while adding the robot.");
           this.actionHandleIsAdding(false)
         }
       }
@@ -112,10 +87,10 @@ export default {
      * Resets all form fields to their initial state.
      */
     resetFormData() {
-      this.name = '';
-      this.status = '';
-      this.specification = '';
-      this.info = '';
+      this.name = "";
+      this.status = "";
+      this.specification = "";
+      this.info = "";
     }
   }
 };

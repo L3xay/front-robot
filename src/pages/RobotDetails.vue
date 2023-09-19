@@ -13,14 +13,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  computed: {
-    ...mapGetters({
-      "gettersRobotById": 'getRobotById'
-    })
-  },
   data() {
     return {
       robot: {}
@@ -38,6 +33,12 @@ export default {
   beforeDestroy() {
     // Sets the `isDetail` state to false using Vuex action.
     this.actionHandleIsDetail(false)
+  },
+
+  computed: {
+    ...mapGetters({
+      "gettersRobotById": "getRobotById",
+    })
   },
 
   methods: {
